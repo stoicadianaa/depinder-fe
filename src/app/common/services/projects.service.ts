@@ -7,12 +7,11 @@ const BASE_URL = 'http://localhost:3000';
   providedIn: 'root'
 })
 export class ProjectsService {
-  //TODO change model to project
-  model = 'analyse'
+  model = 'project'
   constructor(private http: HttpClient) {}
 
   all() {
-    return this.http.get(`${this.getUrl()}/all`, { observe: 'response' });
+    return this.http.get(`${this.getUrl()}/all `, { observe: 'response' });
   }
 
   find(id: string) {
@@ -25,11 +24,5 @@ export class ProjectsService {
 
   getUrlWithID(id: string) {
     return `${this.getUrl()}/${id}`;
-  }
-
-  analyse(path: string) {
-    return this.http.post(this.getUrl(), {
-      "folders" : [path]
-    }, { observe: 'response' });
   }
 }

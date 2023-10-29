@@ -3,6 +3,7 @@ import {ProjectsService} from "../common/services/projects.service";
 import {Router} from "@angular/router";
 import {Project} from "../common/models/project";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {AnalysisService} from "../common/services/analysis.service";
 
 @Component({
   selector: 'app-projects',
@@ -15,7 +16,7 @@ export class ProjectsComponent implements OnInit {
   folderPath: string = '';
   isLoading: boolean = true;
 
-  constructor(private projectsService: ProjectsService, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(private projectsService: ProjectsService, private analysisService: AnalysisService, private router: Router, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class ProjectsComponent implements OnInit {
 
   async analyse(path: string) {
     this.isLoading = true;
-      this.projectsService.analyse(path).subscribe({
+      this.analysisService.analyse(path).subscribe({
         next: (res: any) => {
           this.openSnackBar(`Status code ${res.status}`);
         },
