@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from "../../common/services/projects.service";
 import {Dependency, Project} from "../../common/models/project";
@@ -8,6 +8,8 @@ import {LibraryInfo} from "../../common/models/library";
 import {LibrariesService} from "../../common/services/libraries.service";
 import {firstValueFrom} from "rxjs";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatSort, Sort} from "@angular/material/sort";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
 
 @Component({
   selector: 'app-project-details',
@@ -21,7 +23,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     ]),
   ],
 })
-export class ProjectDetailsComponent implements OnInit{
+export class ProjectDetailsComponent implements OnInit {
   projectId = '';
   project!: Project;
   libraries: Map<Dependency, LibraryInfo> = new Map<Dependency, LibraryInfo>();
@@ -31,6 +33,8 @@ export class ProjectDetailsComponent implements OnInit{
   dataSource!: MatTableDataSource<Dependency>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(private projectsService: ProjectsService, private librariesService: LibrariesService, private route: ActivatedRoute) {
   }
 
@@ -38,6 +42,7 @@ export class ProjectDetailsComponent implements OnInit{
     this.route.params.subscribe(params => {
       this.projectId = params['projectId'];
     });
+
     this.fetchProject();
   }
 
@@ -47,6 +52,7 @@ export class ProjectDetailsComponent implements OnInit{
         this.project = res;
         this.dataSource = new MatTableDataSource(this.project.dependencies);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
         for (const lib of this.project.dependencies) {
           try {
@@ -63,5 +69,4 @@ export class ProjectDetailsComponent implements OnInit{
       }
     });
   }
-
 }
