@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
+import {API_URL} from "../constants";
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = API_URL;
 
 @Injectable({
   providedIn: 'root'
