@@ -13,7 +13,13 @@ export class AnalysisService {
 
   analyse(path: string) {
     return this.http.post(this.getUrl(), {
-      "folders" : [path]
+      "folders" : [path],
+      "options": {
+        "plugins": [],
+        "results": "",
+        "refresh": false
+      },
+      "cache": true
     }, { observe: 'response' });
   }
 
