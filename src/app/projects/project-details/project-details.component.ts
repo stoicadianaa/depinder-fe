@@ -69,4 +69,9 @@ export class ProjectDetailsComponent implements OnInit {
       }
     });
   }
+
+  splitDependencyName(fullName: string): { name: string, version: string } {
+    const [name, version] = fullName.split('@');
+    return { name, version };
+  }
 }

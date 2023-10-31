@@ -17,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LibraryDetailsComponent } from './projects/project-details/library-details/library-details.component';
+import { DependencyRecursiveComponent } from './projects/project-details/dependency-recursive/dependency-recursive.component';
+import {MatTreeModule} from "@angular/material/tree";
 
 @NgModule({
   declarations: [
@@ -24,23 +26,25 @@ import { LibraryDetailsComponent } from './projects/project-details/library-deta
     ProjectsComponent,
     ProjectDetailsComponent,
     LibraryDetailsComponent,
+    DependencyRecursiveComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatTableModule,
-        MatButtonModule,
-        MatInputModule,
-        FormsModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCardModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatSnackBarModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatTableModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTreeModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

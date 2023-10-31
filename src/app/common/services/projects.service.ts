@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {API_URL} from "../constants";
+import {Dependency, Project} from "../models/project";
 
 const BASE_URL = API_URL;
 
@@ -25,5 +26,10 @@ export class ProjectsService {
 
   getUrlWithID(id: string) {
     return `${this.getUrl()}/${id}`;
+  }
+
+  // todo move from here idk where
+  getDependenciesByRequestedBy(dependencies: Dependency[], requestedBy: string) {
+    return dependencies.filter(dep => dep.requestedBy.includes(requestedBy));
   }
 }

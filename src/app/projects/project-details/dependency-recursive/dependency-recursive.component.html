@@ -1,0 +1,23 @@
+<!--<div *ngIf="depth < maxDepth">-->
+<div *ngIf="true">
+  <div *ngIf="depth > 0">
+<!--    Depth: {{ depth }}, Dependency: {{ dependencyName }}-->
+    <p (click)="toggle()">
+      <mat-icon *ngIf="dependencies.length > 0" class="mat-icon-rtl-mirror">
+        {{toggled ? 'arrow_right' : 'arrow_drop_down'}}
+      </mat-icon>
+      {{dependencyName}}@{{dependencyVersion}}
+    </p>
+  </div>
+  <div *ngFor="let dependency of dependencies; let i = index">
+    <div *ngIf="!toggled" style="padding-left: 2rem; margin-left: 2rem">
+      <app-dependency-recursive [depth]="depth + 1"
+                                [maxDepth]="maxDepth"
+                                [dependencyName]="dependency.name"
+                                [dependencyVersion]="dependency.version"
+                                [allDependencies]="allDependencies"
+                                [toggled]="true">
+      </app-dependency-recursive>
+    </div>
+  </div>
+</div>

@@ -21,4 +21,5 @@ export interface Dependency {
   version: string,
   type: string,
   directDep: boolean,
+  requestedBy: string[],
 }
