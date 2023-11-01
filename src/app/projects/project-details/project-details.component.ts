@@ -40,7 +40,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   dependenciesTree = new Tree<Dependency>();
 
-  constructor(private projectsService: ProjectsService, private librariesService: LibrariesService, private route: ActivatedRoute) {
+  constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -60,7 +60,7 @@ export class ProjectDetailsComponent implements OnInit {
         this.dataSource.sort = this.sort;
 
         for (let dependency of this.project.dependencies) {
-          if (dependency.directDep === true) {
+          if (dependency.directDep) {
             let testDependencies = this.projectsService.getDependenciesByRequestedBy(
               this.project.dependencies,
               `${dependency.name}@${dependency.version}`);

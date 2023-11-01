@@ -1,14 +1,18 @@
 <div *ngIf="true">
   <div *ngIf="depth > 0">
-    <p (click)="toggle()">
-      <mat-icon *ngIf="allDependencies.length > 0" class="mat-icon-rtl-mirror">
-        {{showMore ? 'arrow_right' : 'arrow_drop_down'}}
+    <div (click)="toggle()">
+      <mat-icon
+        *ngIf="allDependencies.length > 0"
+        class="mat-icon-rtl-mirror">
+        {{showMore ? 'arrow_drop_down' : 'arrow_right'}}
       </mat-icon>
-      {{dependencyName}}@{{dependencyVersion}}
-    </p>
+      <span [ngClass]="{'highlight': isHighlighted()}">
+        {{dependencyName}}@{{dependencyVersion}}
+      </span>
+    </div>
   </div>
   <div *ngFor="let dependency of allDependencies; let i = index">
-    <div *ngIf="showMore && containsSearchField(i)" style="padding-left: 2rem; margin-left: 2rem">
+    <div *ngIf="showMore && (containsSearchField(i) || (searchField == undefined))" style="padding-left: 2rem; margin-left: 2rem">
       <app-dependency-recursive [depth]="depth + 1"
                                 [dependencyName]="dependency.data.name"
                                 [dependencyVersion]="dependency.data.version"

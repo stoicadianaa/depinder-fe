@@ -24,13 +24,20 @@ export class DependencyRecursiveComponent {
   constructor() { }
 
   containsSearchField(index: number): boolean {
-    if (this.searchField == undefined) {
-      return true;
+    if (this.searchField == undefined || this.searchField.trim() == '') {
+      return false;
     }
     return this.allDependencies[index].contains(this.searchField);
   }
 
   toggle() {
     this.showMore = !this.showMore;
+  }
+
+  isHighlighted(): boolean {
+    if (this.searchField == undefined || this.searchField.trim() == '') {
+      return false;
+    }
+    return this.dependencyName.includes(this.searchField ?? '');
   }
 }
