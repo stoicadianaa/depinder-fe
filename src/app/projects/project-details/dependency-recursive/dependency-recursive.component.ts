@@ -8,9 +8,8 @@ import {TreeNode} from "../../../common/models/tree";
   templateUrl: './dependency-recursive.component.html',
   styleUrls: ['./dependency-recursive.component.css']
 })
-export class DependencyRecursiveComponent implements OnInit {
+export class DependencyRecursiveComponent {
   @Input() depth: number = 0;
-  @Input() maxDepth: number = 5;
 
   //todo change to dependency
   @Input() dependencyName: string = '';
@@ -19,21 +18,19 @@ export class DependencyRecursiveComponent implements OnInit {
   //todo change name
   @Input() allDependencies: TreeNode[] = [];
 
-  @Input() toggled: boolean = false;
+  @Input() showMore: boolean = false;
+  @Input() searchField?: string;
 
-  constructor(private projectService: ProjectsService, private ngZone: NgZone) { }
+  constructor() { }
 
-  ngOnInit() {
-    let requestedBy: string = '';
-    if (this.dependencyVersion != undefined) {
-      requestedBy = this.dependencyName + '@' + this.dependencyVersion;
+  containsSearchField(index: number): boolean {
+    if (this.searchField == undefined) {
+      return true;
     }
-    else {
-      requestedBy = this.dependencyName;
-    }
+    return this.allDependencies[index].contains(this.searchField);
   }
 
   toggle() {
-    this.toggled = !this.toggled;
+    this.showMore = !this.showMore;
   }
 }

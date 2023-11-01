@@ -32,6 +32,7 @@ export class ProjectDetailsComponent implements OnInit {
   dataSource!: MatTableDataSource<Dependency>;
   treeNodes: TreeNode[] = [];
   maxDepth: number = 5;
+  value? : string;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
