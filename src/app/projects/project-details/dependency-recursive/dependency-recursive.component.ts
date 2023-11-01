@@ -17,7 +17,7 @@ export class DependencyRecursiveComponent implements OnInit {
   @Input() dependencyVersion?: string;
 
   //todo change name
-  @Input() allDependencies: TreeNode<Dependency>[] = [];
+  @Input() allDependencies: TreeNode[] = [];
 
   @Input() toggled: boolean = false;
 

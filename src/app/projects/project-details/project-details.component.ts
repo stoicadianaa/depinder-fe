@@ -30,7 +30,7 @@ export class ProjectDetailsComponent implements OnInit {
   displayedColumnsWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: LibraryInfo | null | undefined;
   dataSource!: MatTableDataSource<Dependency>;
-  treeNodes: TreeNode<Dependency>[] = [];
+  treeNodes: TreeNode[] = [];
   maxDepth: number = 5;
 
 
@@ -64,7 +64,7 @@ export class ProjectDetailsComponent implements OnInit {
               this.project.dependencies,
               `${dependency.name}@${dependency.version}`);
 
-            let testTreeNode = new TreeNode<Dependency>(dependency);
+            let testTreeNode = new TreeNode(dependency);
 
             let testTreeNode2 = this.createTreeNode(
               testTreeNode,
@@ -83,11 +83,11 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  createTreeNode(currentDependency: TreeNode<Dependency>, dependencies: Dependency[], depth: number): TreeNode<Dependency> {
+  createTreeNode(currentDependency: TreeNode, dependencies: Dependency[], depth: number): TreeNode {
     if (depth < this.maxDepth) {
       for (let dependency of dependencies) {
 
-        let currentTreeNode: TreeNode<Dependency> = new TreeNode<Dependency>(dependency);
+        let currentTreeNode: TreeNode = new TreeNode(dependency);
 
         let dependencies2 = this.projectsService.getDependenciesByRequestedBy(this.project.dependencies, dependency.name + '@' + dependency.version);
 
@@ -105,9 +105,16 @@ export class ProjectDetailsComponent implements OnInit {
     return currentDependency;
   }
 
-
   splitDependencyName(fullName: string): { name: string, version: string } {
     const [name, version] = fullName.split('@');
     return { name, version };
+  }
+
+  filterDependencies(filterValue: string) {
+    this.treeNodes = this.treeNodes.filter((node) => {
+      let contains = node.contains(filterValue)
+      console.log(node.data.name + ' ' + contains)
+      return contains;
+    })
   }
 }

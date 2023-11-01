@@ -6,6 +6,8 @@
 
   <h1>Version 2</h1>
 
+  <button (click)="filterDependencies('parser')"></button>
+
   <app-dependency-recursive [depth]="0"
                             [maxDepth]="5"
                             [dependencyName]="splitDependencyName(project._id).name"
