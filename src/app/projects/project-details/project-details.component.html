@@ -9,7 +9,7 @@
   <app-dependency-recursive [depth]="0"
                             [maxDepth]="5"
                             [dependencyName]="splitDependencyName(project._id).name"
-                            [allDependencies]="project.dependencies"
+                            [allDependencies]="treeNodes"
                             [dependencyVersion]="splitDependencyName(project._id).version">
   </app-dependency-recursive>
 

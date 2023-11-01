@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnInit, Output} from '@angular/core';
+import {Component, Input, NgZone, OnInit} from '@angular/core';
 import {ProjectsService} from "../../../common/services/projects.service";
 import {Dependency} from "../../../common/models/project";
+import {TreeNode} from "../../../common/models/tree";
 
 @Component({
   selector: 'app-dependency-recursive',
@@ -15,10 +16,9 @@ export class DependencyRecursiveComponent implements OnInit {
   @Input() dependencyName: string = '';
   @Input() dependencyVersion?: string;
 
-  // //todo change name
-  @Input() allDependencies: Dependency[] = [];
+  //todo change name
+  @Input() allDependencies: TreeNode<Dependency>[] = [];
 
-  dependencies: Dependency[] = [];
   @Input() toggled: boolean = false;
 
   constructor(private projectService: ProjectsService, private ngZone: NgZone) { }
@@ -31,12 +31,6 @@ export class DependencyRecursiveComponent implements OnInit {
     else {
       requestedBy = this.dependencyName;
     }
-
-    console.log('requestedBy: ' + requestedBy);
-
-    this.dependencies = this.projectService.getDependenciesByRequestedBy(this.allDependencies, requestedBy);
-
-    console.log('dependencies: ' + this.dependencies.length);
   }
 
   toggle() {
