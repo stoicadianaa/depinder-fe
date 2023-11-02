@@ -1,0 +1,30 @@
+<div *ngIf="selectedDependency !== undefined">
+  <table>
+    <colgroup>
+      <col style="width:10%">
+      <col style="width:20%">
+      <col style="width:20%">
+      <col style="width:15%">
+      <col style="width:15%">
+      <col style="width:20%">
+    </colgroup>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Version</th>
+      <th>Type</th>
+      <th>Requested By</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{ selectedDependency!._id }}</td>
+      <td>{{ selectedDependency!.name }}</td>
+      <td>{{ selectedDependency!.version }}</td>
+      <td>{{ selectedDependency!.type ?? 'unknown'}}</td>
+      <td>{{ selectedDependency!.requestedBy.join(', ') }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

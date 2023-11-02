@@ -1,14 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from "../../common/services/projects.service";
 import {Dependency, Project} from "../../common/models/project";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
-import {LibraryInfo} from "../../common/models/library";
-import {LibrariesService} from "../../common/services/libraries.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {MatSort} from "@angular/material/sort";
-import {Tree, TreeNode} from "../../common/models/tree";
+import {TreeNode} from "../../common/models/tree";
 
 @Component({
   selector: 'app-project-details',
@@ -25,22 +20,10 @@ import {Tree, TreeNode} from "../../common/models/tree";
 export class ProjectDetailsComponent implements OnInit {
   projectId = '';
   project!: Project;
-  libraries: Map<Dependency, LibraryInfo> = new Map<Dependency, LibraryInfo>();
-  displayedColumns: string[] = ['name', 'version', 'type', 'directDep'];
-  displayedColumnsWithExpand = [...this.displayedColumns, 'expand'];
-  expandedElement: LibraryInfo | null | undefined;
-  dataSource!: MatTableDataSource<Dependency>;
   treeNodes: TreeNode[] = [];
   maxDepth: number = 5;
   value? : string;
-
-  selectedDependency?: string;
-
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  dependenciesTree = new Tree<Dependency>();
+  selectedDependency?: Dependency;
 
   constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {
   }
@@ -57,9 +40,6 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectsService.find(this.projectId).subscribe({
       next: async (res: any) => {
         this.project = res;
-        this.dataSource = new MatTableDataSource(this.project.dependencies);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
 
         for (let dependency of this.project.dependencies) {
           if (dependency.directDep) {
@@ -106,19 +86,6 @@ export class ProjectDetailsComponent implements OnInit {
     }
 
     return currentDependency;
-  }
-
-  splitDependencyName(fullName: string): { name: string, version: string } {
-    const [name, version] = fullName.split('@');
-    return { name, version };
-  }
-
-  filterDependencies(filterValue: string) {
-    this.treeNodes = this.treeNodes.filter((node) => {
-      let contains = node.contains(filterValue)
-      console.log(node.data.name + ' ' + contains)
-      return contains;
-    })
   }
 
   receiveInfo($event: any) {

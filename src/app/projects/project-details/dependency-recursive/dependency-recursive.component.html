@@ -7,18 +7,17 @@
         {{showMore ? 'arrow_drop_down' : 'arrow_right'}}
       </mat-icon>
       <span [ngClass]="{'highlight': isHighlighted()}">
-        {{dependencyName}}@{{dependencyVersion}}
+        {{dependency?.name}}@{{dependency?.version}}
       </span>
     </div>
   </div>
   <div *ngFor="let dependency of allDependencies; let i = index">
     <div *ngIf="showMore && (containsSearchField(i) || (searchField == undefined))" style="padding-left: 2rem; margin-left: 2rem">
       <app-dependency-recursive [depth]="depth + 1"
-                                [dependencyName]="dependency.data.name"
-                                [dependencyVersion]="dependency.data.version"
                                 [allDependencies]="dependency.children"
                                 [searchField]="searchField"
                                 [showMore]="containsSearchField(i)"
+                                [dependency]="dependency.data"
                                 (childEvent)="receiveInfo($event)">
       </app-dependency-recursive>
     </div>

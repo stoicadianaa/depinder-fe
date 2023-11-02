@@ -19,6 +19,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LibraryDetailsComponent } from './projects/project-details/library-details/library-details.component';
 import { DependencyRecursiveComponent } from './projects/project-details/dependency-recursive/dependency-recursive.component';
 import {MatTreeModule} from "@angular/material/tree";
+import { DependencyDetailsComponent } from './projects/project-details/dependency-details/dependency-details.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {MatTreeModule} from "@angular/material/tree";
     ProjectDetailsComponent,
     LibraryDetailsComponent,
     DependencyRecursiveComponent,
+    DependencyDetailsComponent,
   ],
   imports: [
     BrowserModule,
