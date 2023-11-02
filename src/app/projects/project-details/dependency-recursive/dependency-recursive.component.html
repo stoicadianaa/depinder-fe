@@ -18,7 +18,8 @@
                                 [dependencyVersion]="dependency.data.version"
                                 [allDependencies]="dependency.children"
                                 [searchField]="searchField"
-                                [showMore]="containsSearchField(i)">
+                                [showMore]="containsSearchField(i)"
+                                (childEvent)="receiveInfo($event)">
       </app-dependency-recursive>
     </div>
   </div>

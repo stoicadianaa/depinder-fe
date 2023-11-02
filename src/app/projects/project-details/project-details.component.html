@@ -16,13 +16,24 @@
   </mat-form-field>
 
 
-  <app-dependency-recursive [dependencyName]="splitDependencyName(project._id).name"
-                            [allDependencies]="treeNodes"
-                            [dependencyVersion]="splitDependencyName(project._id).version"
-                            [searchField]="value"
-                            [showMore]="true"
-  >
-  </app-dependency-recursive>
+
+
+  <div class="col" style="display: flex">
+    <div class="col1">
+      <app-dependency-recursive [dependencyName]="splitDependencyName(project._id).name"
+                                [allDependencies]="treeNodes"
+                                [dependencyVersion]="splitDependencyName(project._id).version"
+                                [searchField]="value"
+                                [showMore]="true"
+                                (childEvent)="receiveInfo($event)"
+      >
+      </app-dependency-recursive>
+    </div>
+    <div class="col2">
+      {{selectedDependency ?? 'No dependency selected'}}
+    </div>
+  </div>
+
 
 </ng-container>
 

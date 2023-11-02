@@ -34,6 +34,8 @@ export class ProjectDetailsComponent implements OnInit {
   maxDepth: number = 5;
   value? : string;
 
+  selectedDependency?: string;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -117,5 +119,9 @@ export class ProjectDetailsComponent implements OnInit {
       console.log(node.data.name + ' ' + contains)
       return contains;
     })
+  }
+
+  receiveInfo($event: any) {
+    this.selectedDependency = $event;
   }
 }

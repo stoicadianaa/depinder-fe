@@ -1,4 +1,4 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, NgZone, OnInit, Output} from '@angular/core';
 import {ProjectsService} from "../../../common/services/projects.service";
 import {Dependency} from "../../../common/models/project";
 import {TreeNode} from "../../../common/models/tree";
@@ -21,6 +21,8 @@ export class DependencyRecursiveComponent {
   @Input() showMore: boolean = false;
   @Input() searchField?: string;
 
+  @Output() childEvent = new EventEmitter<string>();
+
   constructor() { }
 
   containsSearchField(index: number): boolean {
@@ -31,6 +33,7 @@ export class DependencyRecursiveComponent {
   }
 
   toggle() {
+    this.sendInfo();
     this.showMore = !this.showMore;
   }
 
@@ -39,5 +42,13 @@ export class DependencyRecursiveComponent {
       return false;
     }
     return this.dependencyName.includes(this.searchField ?? '');
+  }
+
+  sendInfo() {
+    this.childEvent.emit(this.dependencyName);
+  }
+
+  receiveInfo($event: any) {
+    this.childEvent.emit($event);
   }
 }
