@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from "../../common/services/projects.service";
 import {Dependency, Project} from "../../common/models/project";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TreeNode} from "../../common/models/tree";
+import {LibraryInfo, LibraryVersion} from "../../common/models/library";
+import {LibrariesService} from "../../common/services/libraries.service";
 
 @Component({
   selector: 'app-project-details',
@@ -24,8 +26,9 @@ export class ProjectDetailsComponent implements OnInit {
   maxDepth: number = 5;
   value? : string;
   selectedDependency?: Dependency;
+  selectedLibrary?: LibraryInfo;
 
-  constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {
+  constructor(private projectsService: ProjectsService, private route: ActivatedRoute, private librariesService: LibrariesService) {
   }
 
   ngOnInit(): void {
@@ -34,6 +37,19 @@ export class ProjectDetailsComponent implements OnInit {
     });
 
     this.fetchProject();
+
+    // if (this.selectedDependency !== undefined) {
+    //   this.librariesService.find(this.selectedDependency?._id).subscribe({
+    //       next: (libraryInfo: LibraryInfo) => {
+    //         this.selectedLibrary = libraryInfo;
+    //         // console.log(this.libraryInfo);
+    //       },
+    //       error: (err: any) => {
+    //         console.error(err);
+    //       }
+    //     }
+    //   );
+    // }
   }
 
   fetchProject() {
@@ -90,5 +106,49 @@ export class ProjectDetailsComponent implements OnInit {
 
   receiveInfo($event: any) {
     this.selectedDependency = $event;
+
+    if (this.selectedDependency !== undefined) {
+      this.librariesService.find(this.selectedDependency?._id).subscribe({
+          next: (libraryInfo: LibraryInfo) => {
+            this.selectedLibrary = libraryInfo;
+            // console.log(this.libraryInfo);
+          },
+          error: (err: any) => {
+            console.error(err);
+          }
+        }
+      );
+    }
   }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (this.selectedDependency !== undefined) {
+  //     this.librariesService.find(this.selectedDependency?._id).subscribe({
+  //         next: (libraryInfo: LibraryInfo) => {
+  //           this.selectedLibrary = libraryInfo;
+  //           // console.log(this.libraryInfo);
+  //         },
+  //         error: (err: any) => {
+  //           console.error(err);
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
+
+  // getLibraryInfo(dependency?: Dependency) {
+  //   if (dependency !== undefined)
+  //     this.librariesService.find(dependency?._id).subscribe(
+  //       {
+  //         next: (libraryInfo: LibraryInfo) => {
+  //           // console.log(libraryInfo);
+  //           return libraryInfo;
+  //         },
+  //         error: (err: any) => {
+  //           console.error(err);
+  //         }
+  //       }
+  //     );
+  //   return undefined;
+  // }
 }

@@ -22,9 +22,14 @@
       <td>{{ selectedDependency!._id }}</td>
       <td>{{ selectedDependency!.name }}</td>
       <td>{{ selectedDependency!.version }}</td>
-      <td>{{ selectedDependency!.type ?? 'unknown'}}</td>
+<!--      <td>{{ selectedDependency!.version }}</td>-->
+      <td>{{ selectedDependency!.type}}</td>
       <td>{{ selectedDependency!.requestedBy.join(', ') }}</td>
     </tr>
     </tbody>
   </table>
 </div>
+
+<p> {{selectedVersion | json}}</p>
+<p> {{libraryInfo | json}}</p>
+

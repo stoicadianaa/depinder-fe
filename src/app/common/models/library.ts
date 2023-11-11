@@ -1,4 +1,4 @@
-interface LibraryVersion {
+export interface LibraryVersion {
   version: string
   timestamp: number
   licenses?: string | string[]
