@@ -20,6 +20,7 @@ import { LibraryDetailsComponent } from './projects/project-details/library-deta
 import { DependencyRecursiveComponent } from './projects/project-details/dependency-recursive/dependency-recursive.component';
 import {MatTreeModule} from "@angular/material/tree";
 import { DependencyDetailsComponent } from './projects/project-details/dependency-details/dependency-details.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -30,23 +31,24 @@ import { DependencyDetailsComponent } from './projects/project-details/dependenc
     DependencyRecursiveComponent,
     DependencyDetailsComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatTableModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
-    MatTreeModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatTableModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatCardModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatSnackBarModule,
+        MatTreeModule,
+        MatSelectModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -13,13 +13,16 @@ export class TreeNode {
     this.children.push(child);
   }
 
-  contains(name: string): boolean {
+  contains(name: string, vulnerabilities?: boolean): boolean {
     if (this.data.name.includes(name)) {
       return true;
     }
     else {
       for (let child of this.children) {
-        if (child.contains(name)) {
+        // console.log(child.data.vulnerabilities);
+
+        if (child.contains(name, vulnerabilities)) {
+          // console.log(child.data.name);
           return true;
         }
       }

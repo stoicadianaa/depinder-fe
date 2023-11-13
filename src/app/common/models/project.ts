@@ -22,4 +22,5 @@ export interface Dependency {
   type: string,
   directDep: boolean,
   requestedBy: string[],
+  vulnerabilities: boolean,
 }

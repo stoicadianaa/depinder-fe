@@ -23,8 +23,9 @@ export class ProjectDetailsComponent implements OnInit {
   projectId = '';
   project!: Project;
   treeNodes: TreeNode[] = [];
-  maxDepth: number = 5;
+  maxDepth: number = 10;
   value? : string;
+  filterByVulnerabilities?: boolean;
   selectedDependency?: Dependency;
   selectedLibrary?: LibraryInfo;
 

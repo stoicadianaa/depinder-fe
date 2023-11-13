@@ -17,16 +17,17 @@ export class DependencyRecursiveComponent {
 
   @Input() showMore: boolean = false;
   @Input() searchField?: string;
+  @Input() filterByVulnerabilities?: boolean;
 
   @Output() childEvent = new EventEmitter<Dependency>();
 
   constructor() { }
 
   containsSearchField(index: number): boolean {
-    if (this.searchField == undefined || this.searchField.trim() == '') {
+    if ((this.searchField == undefined || this.searchField.trim() == '')) {
       return false;
     }
-    return this.allDependencies[index].contains(this.searchField);
+    return this.allDependencies[index].contains(this.searchField!, this.filterByVulnerabilities);
   }
 
   toggle() {

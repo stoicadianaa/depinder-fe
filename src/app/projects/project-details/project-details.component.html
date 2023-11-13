@@ -13,10 +13,22 @@
 <!--    </button>-->
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Filter by vulnerabilities</mat-label>
+    <mat-select [(value)]="filterByVulnerabilities">
+      <mat-option>None</mat-option>
+      <mat-option value="true">With vulnerabilities</mat-option>
+      <mat-option value="false">Without vulnerabilities</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <p>You selected: {{filterByVulnerabilities}}</p>
+
   <div class="col" style="display: flex">
     <div class="col1" style="flex-shrink: 0; flex-grow: 0">
       <app-dependency-recursive [allDependencies]="treeNodes"
                                 [searchField]="value"
+                                [filterByVulnerabilities]="filterByVulnerabilities"
                                 [showMore]="true"
                                 (childEvent)="receiveInfo($event)"
       >
