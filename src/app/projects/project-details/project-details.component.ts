@@ -24,10 +24,14 @@ export class ProjectDetailsComponent implements OnInit {
   project!: Project;
   treeNodes: TreeNode[] = [];
   maxDepth: number = 10;
-  value? : string;
-  filterByVulnerabilities?: boolean;
   selectedDependency?: Dependency;
   selectedLibrary?: LibraryInfo;
+
+  value? : string;
+  searchField? : string;
+  filterByVulnerabilities?: boolean;
+  filterByOutdated?: boolean;
+  filterByOutOfSupport?: boolean;
 
   constructor(private projectsService: ProjectsService, private route: ActivatedRoute, private librariesService: LibrariesService) {
   }
@@ -38,19 +42,6 @@ export class ProjectDetailsComponent implements OnInit {
     });
 
     this.fetchProject();
-
-    // if (this.selectedDependency !== undefined) {
-    //   this.librariesService.find(this.selectedDependency?._id).subscribe({
-    //       next: (libraryInfo: LibraryInfo) => {
-    //         this.selectedLibrary = libraryInfo;
-    //         // console.log(this.libraryInfo);
-    //       },
-    //       error: (err: any) => {
-    //         console.error(err);
-    //       }
-    //     }
-    //   );
-    // }
   }
 
   fetchProject() {
@@ -122,34 +113,15 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (this.selectedDependency !== undefined) {
-  //     this.librariesService.find(this.selectedDependency?._id).subscribe({
-  //         next: (libraryInfo: LibraryInfo) => {
-  //           this.selectedLibrary = libraryInfo;
-  //           // console.log(this.libraryInfo);
-  //         },
-  //         error: (err: any) => {
-  //           console.error(err);
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
+  setSearchField() {
+    this.searchField = this.value;
+  }
 
-  // getLibraryInfo(dependency?: Dependency) {
-  //   if (dependency !== undefined)
-  //     this.librariesService.find(dependency?._id).subscribe(
-  //       {
-  //         next: (libraryInfo: LibraryInfo) => {
-  //           // console.log(libraryInfo);
-  //           return libraryInfo;
-  //         },
-  //         error: (err: any) => {
-  //           console.error(err);
-  //         }
-  //       }
-  //     );
-  //   return undefined;
-  // }
+  resetFilters() {
+    this.searchField = undefined;
+    this.value = undefined;
+    this.filterByVulnerabilities = undefined;
+    this.filterByOutdated = undefined;
+    this.filterByOutOfSupport = undefined;
+  }
 }

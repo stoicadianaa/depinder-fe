@@ -7,7 +7,7 @@
         class="mat-icon-rtl-mirror">
         {{showMore ? 'arrow_drop_down' : 'arrow_right'}}
       </mat-icon>
-      <span [ngClass]="{'highlight': isHighlighted(), 'vulnerability': filterByVulnerabilities !== undefined && hasVulnerability(), 'no-vulnerability': hasNoVulnerability()}">
+      <span [ngClass]="{'highlight': isHighlighted()}">
         {{dependency?.name}}@{{dependency?.version}}
       </span>
     </div>
@@ -20,6 +20,8 @@
                                 [showMore]="containsFilters(i)"
                                 [dependency]="dependency.data"
                                 [filterByVulnerabilities]="filterByVulnerabilities"
+                                [filterByOutdated]="filterByOutdated"
+                                [filterByOutOfSupport]="filterByOutOfSupport"
                                 (childEvent)="receiveInfo($event)">
       </app-dependency-recursive>
     </div>

@@ -4,13 +4,20 @@
     <h3 style="text-align: center;">{{project.projectPath}}</h3>
   </div>
 
-  <mat-form-field class="example-form-field">
+<!--  <mat-form-field>-->
+<!--    <input matInput type="number" [(ngModel)]="maxDepth">-->
+<!--    <button matSuffix mat-icon-button aria-label="Clear" (click)="fetchProject()">-->
+<!--      <mat-icon>search</mat-icon>-->
+<!--    </button>-->
+<!--  </mat-form-field>-->
+
+  <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput type="text"
            [(ngModel)]="value">
-<!--    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="filterDependencies(value)">-->
-<!--      <mat-icon>search</mat-icon>-->
-<!--    </button>-->
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="setSearchField()">
+      <mat-icon>search</mat-icon>
+    </button>
   </mat-form-field>
 
   <mat-form-field>
@@ -22,13 +29,19 @@
     </mat-select>
   </mat-form-field>
 
-  <p>You selected: {{filterByVulnerabilities}}</p>
+  <mat-checkbox [(ngModel)]="filterByOutdated">Outdated</mat-checkbox>
+
+  <mat-checkbox [(ngModel)]="filterByOutOfSupport">Out of support</mat-checkbox>
+
+  <button mat-button (click)="resetFilters()">Reset</button>
 
   <div class="col" style="display: flex">
     <div class="col1" style="flex-shrink: 0; flex-grow: 0">
       <app-dependency-recursive [allDependencies]="treeNodes"
-                                [searchField]="value"
+                                [searchField]="searchField"
                                 [filterByVulnerabilities]="filterByVulnerabilities"
+                                [filterByOutOfSupport]="filterByOutOfSupport == true ? true : undefined"
+                                [filterByOutdated]="filterByOutdated == true ? true : undefined"
                                 [showMore]="true"
                                 (childEvent)="receiveInfo($event)"
       >
@@ -43,6 +56,4 @@
 
     </div>
   </div>
-
-
 </ng-container>

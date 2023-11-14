@@ -16,20 +16,32 @@ export class DependencyRecursiveComponent {
   @Input() allDependencies: TreeNode[] = [];
 
   @Input() showMore: boolean = false;
-  @Input() searchField?: string;
-  @Input() filterByVulnerabilities?: boolean;
 
   @Output() childEvent = new EventEmitter<Dependency>();
+
+  // filters
+  @Input() searchField?: string;
+  @Input() filterByVulnerabilities?: boolean;
+  @Input() filterByOutdated?: boolean;
+  @Input() filterByOutOfSupport?: boolean;
 
   constructor() { }
 
   containsFilters(index: number): boolean {
-    if ((this.searchField === undefined || this.searchField.trim() == '') && this.filterByVulnerabilities === undefined) {
+    const searchFieldTrimmed = this.searchField?.trim();
+    const isSearchFieldEmpty = !searchFieldTrimmed; // true if searchField is undefined or empty
+    const isFilterByVulnerabilitiesUndefined = this.filterByVulnerabilities === undefined;
+    const isFilterByOutOfSupportUndefined = this.filterByOutOfSupport === undefined;
+    const isFilterByOutdatedUndefined = this.filterByOutdated === undefined;
+
+    // Return false if both search field and filterByVulnerabilities are not set
+    if (isSearchFieldEmpty && isFilterByVulnerabilitiesUndefined && isFilterByOutOfSupportUndefined && isFilterByOutdatedUndefined) {
       return false;
     }
-    // console.log(this.filterByVulnerabilities);
-    return this.allDependencies[index].contains(this.searchField, this.filterByVulnerabilities);
+
+    return this.allDependencies[index].contains(searchFieldTrimmed, this.filterByVulnerabilities, this.filterByOutOfSupport, this.filterByOutdated);
   }
+
 
   toggle() {
     this.sendInfo();
@@ -37,17 +49,17 @@ export class DependencyRecursiveComponent {
   }
 
   isHighlighted(): boolean {
-    if (this.searchField == undefined || this.searchField.trim() == '') {
-      return false;
-    }
-    return (this.dependency?.name ?? '').includes(this.searchField ?? '');
-  }
+    const nameMatch = (this.searchField === undefined || this.searchField.trim().length > 0) && (this.dependency?.name.includes(this.searchField ?? '') ?? false);
 
-  hasVulnerability(): boolean | undefined {
-    return `${this.dependency?.vulnerabilities}` === `${this.filterByVulnerabilities}` && `${this.filterByVulnerabilities}` === `true`;
-  }
-  hasNoVulnerability(): boolean {
-    return `${this.dependency?.vulnerabilities}` === `${this.filterByVulnerabilities}` && `${this.filterByVulnerabilities}` === `false`;
+    //todo check why comparisons don't work with boolean
+    const vulnerabilitiesMatch = this.filterByVulnerabilities === undefined || `${this.dependency?.vulnerabilities}` === `${this.filterByVulnerabilities}`;
+    const outOfSupportMatch = this.filterByOutOfSupport === undefined || `${this.dependency?.outOfSupport}` === `${this.filterByOutOfSupport}`;
+    const outOfDateMatch = this.filterByOutdated === undefined || `${this.dependency?.outdated}` === `${this.filterByOutdated}`;
+
+    if (((this.searchField === undefined || this.searchField.trim().length == 0)) && this.filterByVulnerabilities === undefined && this.filterByOutOfSupport === undefined && this.filterByOutdated === undefined)
+      return false;
+
+    return (vulnerabilitiesMatch && (outOfSupportMatch) && outOfDateMatch && nameMatch);
   }
 
   sendInfo() {

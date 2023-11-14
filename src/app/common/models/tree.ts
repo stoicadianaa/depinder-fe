@@ -13,22 +13,24 @@ export class TreeNode {
     this.children.push(child);
   }
 
-  contains(name?: string, vulnerabilities?: boolean): boolean {
-    if (name !== undefined && this.data.name.includes(name) && vulnerabilities === undefined) {
+  contains(name?: string, vulnerabilities?: boolean, outOfSupport?: boolean, outdated?: boolean): boolean {
+    const nameMatch = name === undefined || this.data.name.includes(name);
+
+    //todo check why comparisons don't work with boolean
+    const vulnerabilitiesMatch = vulnerabilities === undefined || `${this.data.vulnerabilities}` === `${vulnerabilities}`;
+    const outOfSupportMatch = outOfSupport === undefined || `${this.data.outOfSupport}` === `${outOfSupport}`;
+    const outOfDateMatch = outdated === undefined || `${this.data.outdated}` === `${outdated}`;
+
+    if (nameMatch && vulnerabilitiesMatch && outOfSupportMatch && outOfDateMatch) {
       return true;
     }
-    if (`${this.data.vulnerabilities}` === `${vulnerabilities}` && name === undefined) {
-      return true;
-    }
-    if (this.data.name.includes(name!) && `${this.data.vulnerabilities}` === `${vulnerabilities}`) {
-      return true;
-    } else {
-      for (let child of this.children) {
-        if (child.contains(name, vulnerabilities)) {
-          return true;
-        }
+
+    for (let child of this.children) {
+      if (child.contains(name, vulnerabilities, outOfSupport, outdated)) {
+        return true;
       }
     }
+
     return false;
   }
 }

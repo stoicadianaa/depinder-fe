@@ -21,6 +21,7 @@ import { DependencyRecursiveComponent } from './projects/project-details/depende
 import {MatTreeModule} from "@angular/material/tree";
 import { DependencyDetailsComponent } from './projects/project-details/dependency-details/dependency-details.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -31,24 +32,25 @@ import {MatSelectModule} from "@angular/material/select";
     DependencyRecursiveComponent,
     DependencyDetailsComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatTableModule,
-        MatButtonModule,
-        MatInputModule,
-        FormsModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCardModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatSnackBarModule,
-        MatTreeModule,
-        MatSelectModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatTableModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTreeModule,
+    MatSelectModule,
+    MatCheckboxModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

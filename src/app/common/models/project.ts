@@ -23,4 +23,6 @@ export interface Dependency {
   directDep: boolean,
   requestedBy: string[],
   vulnerabilities: boolean,
+  outOfSupport: boolean,
+  outdated: boolean,
 }
