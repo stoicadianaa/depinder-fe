@@ -23,11 +23,12 @@ export class DependencyRecursiveComponent {
 
   constructor() { }
 
-  containsSearchField(index: number): boolean {
-    if ((this.searchField == undefined || this.searchField.trim() == '')) {
+  containsFilters(index: number): boolean {
+    if ((this.searchField === undefined || this.searchField.trim() == '') && this.filterByVulnerabilities === undefined) {
       return false;
     }
-    return this.allDependencies[index].contains(this.searchField!, this.filterByVulnerabilities);
+    // console.log(this.filterByVulnerabilities);
+    return this.allDependencies[index].contains(this.searchField, this.filterByVulnerabilities);
   }
 
   toggle() {
@@ -40,6 +41,13 @@ export class DependencyRecursiveComponent {
       return false;
     }
     return (this.dependency?.name ?? '').includes(this.searchField ?? '');
+  }
+
+  hasVulnerability(): boolean | undefined {
+    return `${this.dependency?.vulnerabilities}` === `${this.filterByVulnerabilities}` && `${this.filterByVulnerabilities}` === `true`;
+  }
+  hasNoVulnerability(): boolean {
+    return `${this.dependency?.vulnerabilities}` === `${this.filterByVulnerabilities}` && `${this.filterByVulnerabilities}` === `false`;
   }
 
   sendInfo() {

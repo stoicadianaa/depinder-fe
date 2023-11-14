@@ -13,16 +13,18 @@ export class TreeNode {
     this.children.push(child);
   }
 
-  contains(name: string, vulnerabilities?: boolean): boolean {
-    if (this.data.name.includes(name)) {
+  contains(name?: string, vulnerabilities?: boolean): boolean {
+    if (name !== undefined && this.data.name.includes(name) && vulnerabilities === undefined) {
       return true;
     }
-    else {
+    if (`${this.data.vulnerabilities}` === `${vulnerabilities}` && name === undefined) {
+      return true;
+    }
+    if (this.data.name.includes(name!) && `${this.data.vulnerabilities}` === `${vulnerabilities}`) {
+      return true;
+    } else {
       for (let child of this.children) {
-        // console.log(child.data.vulnerabilities);
-
         if (child.contains(name, vulnerabilities)) {
-          // console.log(child.data.name);
           return true;
         }
       }

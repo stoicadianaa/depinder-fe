@@ -1,4 +1,5 @@
 <div *ngIf="true">
+<!--  <p> filter by vulnerabilities: {{filterByVulnerabilities}}</p>-->
   <div *ngIf="depth > 0">
     <div (click)="toggle()">
       <mat-icon
@@ -6,18 +7,19 @@
         class="mat-icon-rtl-mirror">
         {{showMore ? 'arrow_drop_down' : 'arrow_right'}}
       </mat-icon>
-      <span [ngClass]="{'highlight': isHighlighted()}">
+      <span [ngClass]="{'highlight': isHighlighted(), 'vulnerability': filterByVulnerabilities !== undefined && hasVulnerability(), 'no-vulnerability': hasNoVulnerability()}">
         {{dependency?.name}}@{{dependency?.version}}
       </span>
     </div>
   </div>
   <div *ngFor="let dependency of allDependencies; let i = index">
-    <div *ngIf="showMore && (containsSearchField(i) || (searchField == undefined))" style="padding-left: 2rem; margin-left: 2rem">
+    <div *ngIf="showMore && (containsFilters(i) || (searchField == undefined))" style="padding-left: 2rem; margin-left: 2rem">
       <app-dependency-recursive [depth]="depth + 1"
                                 [allDependencies]="dependency.children"
                                 [searchField]="searchField"
-                                [showMore]="containsSearchField(i)"
+                                [showMore]="containsFilters(i)"
                                 [dependency]="dependency.data"
+                                [filterByVulnerabilities]="filterByVulnerabilities"
                                 (childEvent)="receiveInfo($event)">
       </app-dependency-recursive>
     </div>
