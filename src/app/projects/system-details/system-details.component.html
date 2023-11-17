@@ -1,1 +1,7 @@
-<p>system-details works!</p>
+@for (system of systems$; track $index) {
+  <h3> {{system.name}}</h3>
+  <app-projects-table
+    [projects]="map$.get(system) ?? []"
+  ></app-projects-table>
+}
+

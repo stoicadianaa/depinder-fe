@@ -11,30 +11,23 @@ import {AnalysisService} from "../common/services/analysis.service";
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  projects$: Project[] | any;
-  displayedColumns: string[] = ['name', 'projectPath'];
+  projects$: Project[] = [];
   folderPath: string = '';
-  isLoading: boolean = true;
 
-  constructor(private projectsService: ProjectsService, private analysisService: AnalysisService, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(private projectsService: ProjectsService, private analysisService: AnalysisService, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.fetchProjects().then(() => this.isLoading = false);
+    this.fetchProjects();
   }
 
   async fetchProjects() {
-      this.projectsService.all().subscribe((res: any) => {
-        this.projects$ = res.body['data'];
-      });
-  }
-
-  navigate(projectId: string) {
-    this.router.navigate(['/project', projectId]);
+    this.projectsService.all().subscribe((res: any) => {
+      this.projects$ = res.body['data'];
+    });
   }
 
   async analyse(path: string) {
-    this.isLoading = true;
       this.analysisService.analyse(path).subscribe({
         next: (res: any) => {
           this.openSnackBar(`Status code ${res.status}`);
