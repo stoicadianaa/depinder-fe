@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LibraryDetailsComponent } from './projects/project-details/library-details/library-details.component';
-import { DependencyRecursiveComponent } from './projects/project-details/dependency-recursive/dependency-recursive.component';
+import { DependencyRecursiveComponent } from './common/standalone/dependency-recursive/dependency-recursive.component';
 import {MatTreeModule} from "@angular/material/tree";
 import { DependencyDetailsComponent } from './projects/project-details/dependency-details/dependency-details.component';
 import {MatSelectModule} from "@angular/material/select";
@@ -30,7 +30,6 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
     ProjectsComponent,
     ProjectDetailsComponent,
     LibraryDetailsComponent,
-    DependencyRecursiveComponent,
     DependencyDetailsComponent,
   ],
   imports: [
@@ -50,7 +49,8 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
     MatSnackBarModule,
     MatTreeModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DependencyRecursiveComponent
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}

@@ -1,0 +1,39 @@
+<div *ngIf="true">
+<!--  <p> filter by vulnerabilities: {{filterByVulnerabilities}}</p>-->
+  <div *ngIf="depth > 0">
+    <div (click)="toggle()">
+      <mat-icon
+        *ngIf="allDependencies.length > 0"
+        class="mat-icon-rtl-mirror">
+        {{showMore ? 'arrow_drop_down' : 'arrow_right'}}
+      </mat-icon>
+      <span
+        [ngClass]="{'highlight': isHighlighted()}">
+        {{dependency?.name}} at {{dependency?.version}}
+      </span>
+    </div>
+  </div>
+
+  @for(dependency of allDependencies; track dependency?.data) {
+    @if (showMore && (containsFilters($index) || (searchField == undefined))) {
+      <div style="padding-left: 2rem; margin-left: 2rem">
+        @defer (on viewport){
+          <app-dependency-recursive
+          [depth]="depth + 1"
+          [allDependencies]="dependency.children"
+          [searchField]="searchField"
+          [showMore]="containsFilters($index)"
+          [dependency]="dependency.data"
+          [filterByVulnerabilities]="filterByVulnerabilities"
+          [filterByOutdated]="filterByOutdated"
+          [filterByOutOfSupport]="filterByOutOfSupport"
+          (childEvent)="receiveInfo($event)">
+        </app-dependency-recursive>
+        } @placeholder () {
+          <mat-progress-spinner></mat-progress-spinner>
+        }
+      </div>
+    }
+  }
+
+</div>

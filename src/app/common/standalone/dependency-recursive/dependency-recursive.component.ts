@@ -1,11 +1,22 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Dependency} from "../../../common/models/project";
-import {TreeNode} from "../../../common/models/tree";
+import {Dependency} from "../../models/project";
+import {TreeNode} from "../../models/tree";
+import {of} from "rxjs";
+import {MatIconModule} from "@angular/material/icon";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-dependency-recursive',
   templateUrl: './dependency-recursive.component.html',
-  styleUrls: ['./dependency-recursive.component.css']
+  styleUrls: ['./dependency-recursive.component.css'],
+  standalone: true,
+  imports: [
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgIf,
+    NgClass
+  ]
 })
 export class DependencyRecursiveComponent {
   @Input() depth: number = 0;
@@ -69,4 +80,6 @@ export class DependencyRecursiveComponent {
   receiveInfo($event: any) {
     this.childEvent.emit($event);
   }
+
+  protected readonly of = of;
 }
