@@ -2,8 +2,8 @@
 <!--  <p (click)="navigate(project._id)">{{project | json}}</p>-->
 <!--</div>-->
 
-<div style="padding-left: 10rem; padding-right: 10rem">
-<!--  move to standalone component-->
+<div style="padding: 2rem">
+  <h1>All projects</h1>
 
   <app-projects-table [projects]="projects$"></app-projects-table>
 
@@ -14,8 +14,8 @@
     <button mat-raised-button (click)="analyse(folderPath)">Analyse project</button>
   </div>
 
-  <app-system-details>
+  <h1>Systems</h1>
 
-  </app-system-details>
+  <app-systems></app-systems>
 
 </div>

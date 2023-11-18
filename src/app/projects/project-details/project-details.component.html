@@ -4,13 +4,6 @@
     <h3 style="text-align: center;">{{project.projectPath}}</h3>
   </div>
 
-<!--  <mat-form-field>-->
-<!--    <input matInput type="number" [(ngModel)]="maxDepth">-->
-<!--    <button matSuffix mat-icon-button aria-label="Clear" (click)="fetchProject()">-->
-<!--      <mat-icon>search</mat-icon>-->
-<!--    </button>-->
-<!--  </mat-form-field>-->
-
   <div class="col" style="display: flex">
     <div class="col1" style="flex-shrink: 0; flex-grow: 0">
       @defer {
@@ -47,7 +40,7 @@
         >
         </app-dependency-recursive>
       } @loading (minimum 1s) {
-        <mat-spinner></mat-spinner>
+        <p>Loading...</p>
       }
 
 

@@ -23,7 +23,7 @@ import { DependencyDetailsComponent } from './projects/project-details/dependenc
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
-import {SystemDetailsComponent} from "./projects/system-details/system-details.component";
+import {SystemsDetailsComponent} from "./projects/system-collection/systems-details.component";
 import {ProjectsTableComponent} from "./common/standalone/projects-table/projects-table.component";
 
 @NgModule({
@@ -53,7 +53,7 @@ import {ProjectsTableComponent} from "./common/standalone/projects-table/project
         MatSelectModule,
         MatCheckboxModule,
         DependencyRecursiveComponent,
-        SystemDetailsComponent,
+        SystemsDetailsComponent,
         ProjectsTableComponent
     ],
   providers: [
