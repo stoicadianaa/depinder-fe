@@ -25,6 +25,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 import {SystemsDetailsComponent} from "./projects/system-collection/systems-details.component";
 import {ProjectsTableComponent} from "./common/standalone/projects-table/projects-table.component";
+import {DependencyFilterComponent} from "./projects/project-details/dependency-filter/dependency-filter.component";
 
 @NgModule({
   declarations: [
@@ -34,28 +35,29 @@ import {ProjectsTableComponent} from "./common/standalone/projects-table/project
     LibraryDetailsComponent,
     DependencyDetailsComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatTableModule,
-        MatButtonModule,
-        MatInputModule,
-        FormsModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCardModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatSnackBarModule,
-        MatTreeModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        DependencyRecursiveComponent,
-        SystemsDetailsComponent,
-        ProjectsTableComponent
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatTableModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTreeModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    DependencyRecursiveComponent,
+    SystemsDetailsComponent,
+    ProjectsTableComponent,
+    DependencyFilterComponent
+  ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ],

@@ -4,7 +4,8 @@ import {TreeNode} from "../../models/tree";
 import {of} from "rxjs";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {NgClass, NgIf} from "@angular/common";
+import {JsonPipe, NgClass, NgIf} from "@angular/common";
+import {DependencyFilter} from "../../models/dependency-filter";
 
 @Component({
   selector: 'app-dependency-recursive',
@@ -15,7 +16,8 @@ import {NgClass, NgIf} from "@angular/common";
     MatIconModule,
     MatProgressSpinnerModule,
     NgIf,
-    NgClass
+    NgClass,
+    JsonPipe
   ]
 })
 export class DependencyRecursiveComponent {
@@ -30,29 +32,31 @@ export class DependencyRecursiveComponent {
 
   @Output() childEvent = new EventEmitter<Dependency>();
 
-  // filters
-  @Input() searchField?: string;
-  @Input() filterByVulnerabilities?: boolean;
-  @Input() filterByOutdated?: boolean;
-  @Input() filterByOutOfSupport?: boolean;
+  @Input() filter!: DependencyFilter;
 
   constructor() { }
 
   containsFilters(index: number): boolean {
-    const searchFieldTrimmed = this.searchField?.trim();
+    const searchFieldTrimmed = this.filter.searchField?.trim()
+    // console.log('searchFieldTrimmed', searchFieldTrimmed)
     const isSearchFieldEmpty = !searchFieldTrimmed; // true if searchField is undefined or empty
-    const isFilterByVulnerabilitiesUndefined = this.filterByVulnerabilities === undefined;
-    const isFilterByOutOfSupportUndefined = this.filterByOutOfSupport === undefined;
-    const isFilterByOutdatedUndefined = this.filterByOutdated === undefined;
+    // console.log('isSearchFieldEmpty', isSearchFieldEmpty)
+    const isFilterByVulnerabilitiesUndefined = this.filter.filterByVulnerabilities === undefined;
+    // console.log('isFilterByVulnerabilitiesUndefined', isFilterByVulnerabilitiesUndefined)
+    const isFilterByOutOfSupportUndefined = this.filter.filterByOutOfSupport === undefined;
+    // console.log('isFilterByOutOfSupportUndefined', isFilterByOutOfSupportUndefined)
+    const isFilterByOutdatedUndefined = this.filter.filterByOutdated === undefined;
+    // console.log('isFilterByOutdatedUndefined', isFilterByOutdatedUndefined)
 
-    // Return false if both search field and filterByVulnerabilities are not set
-    if (isSearchFieldEmpty && isFilterByVulnerabilitiesUndefined && isFilterByOutOfSupportUndefined && isFilterByOutdatedUndefined) {
+    // // Return false if both search field and filterByVulnerabilities are not set
+    // if (isSearchFieldEmpty && isFilterByVulnerabilitiesUndefined && isFilterByOutOfSupportUndefined && isFilterByOutdatedUndefined && this.depth === 0) {
+    //   return true;
+    // }
+    if (isSearchFieldEmpty && isFilterByVulnerabilitiesUndefined && isFilterByOutOfSupportUndefined && isFilterByOutdatedUndefined)
       return false;
-    }
 
-    return this.allDependencies[index].contains(searchFieldTrimmed, this.filterByVulnerabilities, this.filterByOutOfSupport, this.filterByOutdated);
+    return this.allDependencies[index].contains(searchFieldTrimmed, this.filter.filterByVulnerabilities, this.filter.filterByOutOfSupport, this.filter.filterByOutdated);
   }
-
 
   toggle() {
     this.sendInfo();
@@ -60,14 +64,14 @@ export class DependencyRecursiveComponent {
   }
 
   isHighlighted(): boolean {
-    const nameMatch = (this.searchField === undefined || this.searchField.trim().length > 0) && (this.dependency?.name.includes(this.searchField ?? '') ?? false);
+    const nameMatch = (this.filter.searchField === undefined || this.filter.searchField.trim().length > 0) && (this.dependency?.name.includes(this.filter.searchField ?? '') ?? false);
 
     //todo check why comparisons don't work with boolean
-    const vulnerabilitiesMatch = this.filterByVulnerabilities === undefined || `${this.dependency?.vulnerabilities}` === `${this.filterByVulnerabilities}`;
-    const outOfSupportMatch = this.filterByOutOfSupport === undefined || `${this.dependency?.outOfSupport}` === `${this.filterByOutOfSupport}`;
-    const outOfDateMatch = this.filterByOutdated === undefined || `${this.dependency?.outdated}` === `${this.filterByOutdated}`;
+    const vulnerabilitiesMatch = this.filter.filterByVulnerabilities === undefined || `${this.dependency?.vulnerabilities}` === `${this.filter.filterByVulnerabilities}`;
+    const outOfSupportMatch = this.filter.filterByOutOfSupport === undefined || `${this.dependency?.outOfSupport}` === `${this.filter.filterByOutOfSupport}`;
+    const outOfDateMatch = this.filter.filterByOutdated === undefined || `${this.dependency?.outdated}` === `${this.filter.filterByOutdated}`;
 
-    if (((this.searchField === undefined || this.searchField.trim().length == 0)) && this.filterByVulnerabilities === undefined && this.filterByOutOfSupport === undefined && this.filterByOutdated === undefined)
+    if (((this.filter.searchField === undefined || this.filter.searchField.trim().length == 0)) && this.filter.filterByVulnerabilities === undefined && this.filter.filterByOutOfSupport === undefined && this.filter.filterByOutdated === undefined)
       return false;
 
     return (vulnerabilitiesMatch && (outOfSupportMatch) && outOfDateMatch && nameMatch);
@@ -80,6 +84,4 @@ export class DependencyRecursiveComponent {
   receiveInfo($event: any) {
     this.childEvent.emit($event);
   }
-
-  protected readonly of = of;
 }

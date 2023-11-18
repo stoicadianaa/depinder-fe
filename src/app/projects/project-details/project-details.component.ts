@@ -6,6 +6,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TreeNode} from "../../common/models/tree";
 import {LibraryInfo, LibraryVersion} from "../../common/models/library";
 import {LibrariesService} from "../../common/services/libraries.service";
+import {DependencyFilter} from "../../common/models/dependency-filter";
 
 @Component({
   selector: 'app-project-details',
@@ -26,12 +27,14 @@ export class ProjectDetailsComponent implements OnInit {
   maxDepth: number = 10;
   selectedDependency?: Dependency;
   selectedLibrary?: LibraryInfo;
-
   value? : string;
-  searchField? : string;
-  filterByVulnerabilities?: boolean;
-  filterByOutdated?: boolean;
-  filterByOutOfSupport?: boolean;
+
+  filter: DependencyFilter = {
+    searchField: undefined,
+    filterByVulnerabilities: undefined,
+    filterByOutdated: undefined,
+    filterByOutOfSupport: undefined,
+  };
 
   constructor(private projectsService: ProjectsService, private route: ActivatedRoute, private librariesService: LibrariesService) {
   }
@@ -112,16 +115,7 @@ export class ProjectDetailsComponent implements OnInit {
       );
     }
   }
-
-  setSearchField() {
-    this.searchField = this.value;
-  }
-
-  resetFilters() {
-    this.searchField = undefined;
-    this.value = undefined;
-    this.filterByVulnerabilities = undefined;
-    this.filterByOutdated = undefined;
-    this.filterByOutOfSupport = undefined;
+  receiveFilter($event: DependencyFilter) {
+    this.filter = $event;
   }
 }

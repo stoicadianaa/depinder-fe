@@ -1,5 +1,4 @@
 <div *ngIf="true">
-<!--  <p> filter by vulnerabilities: {{filterByVulnerabilities}}</p>-->
   <div *ngIf="depth > 0">
     <div (click)="toggle()">
       <mat-icon
@@ -14,19 +13,16 @@
     </div>
   </div>
 
-  @for(dependency of allDependencies; track dependency?.data) {
-    @if (showMore && (containsFilters($index) || (searchField == undefined))) {
+  @for(dependency of allDependencies; track $index) {
+    @if (showMore && (containsFilters($index) || ((this.filter | json) === '{}'))) {
       <div style="padding-left: 2rem; margin-left: 2rem">
         @defer (on viewport){
           <app-dependency-recursive
           [depth]="depth + 1"
           [allDependencies]="dependency.children"
-          [searchField]="searchField"
+          [filter]="filter"
           [showMore]="containsFilters($index)"
           [dependency]="dependency.data"
-          [filterByVulnerabilities]="filterByVulnerabilities"
-          [filterByOutdated]="filterByOutdated"
-          [filterByOutOfSupport]="filterByOutOfSupport"
           (childEvent)="receiveInfo($event)">
         </app-dependency-recursive>
         } @placeholder () {
